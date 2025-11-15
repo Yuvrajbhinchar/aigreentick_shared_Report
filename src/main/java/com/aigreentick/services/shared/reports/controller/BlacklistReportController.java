@@ -1,6 +1,7 @@
 package com.aigreentick.services.shared.reports.controller;
 
 import com.aigreentick.services.shared.reports.dto.BlacklistStatusReportDto;
+import com.aigreentick.services.shared.reports.dto.BlacklistTypeCountDto;
 import com.aigreentick.services.shared.reports.dto.CountryBlacklistCountDto;
 import com.aigreentick.services.shared.reports.service.BlacklistReportService;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,10 @@ public class BlacklistReportController {
     @GetMapping("/blacklist-by-country")
     public ResponseEntity<List<CountryBlacklistCountDto>> getBlacklistCountByCountry() {
         return ResponseEntity.ok(blacklistReportService.getBlacklistCountByCountry());
+    }
+
+    @GetMapping("/blacklist-by-type")
+    public ResponseEntity<List<BlacklistTypeCountDto>> getBlacklistCountByType() {
+        return ResponseEntity.ok(blacklistReportService.getBlacklistCountByType());
     }
 }

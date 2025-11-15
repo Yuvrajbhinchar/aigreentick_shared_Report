@@ -38,4 +38,15 @@ public interface BlacklistReportRepository extends JpaRepository<Blacklist, Long
         ORDER BY total_blacklisted DESC
         """, nativeQuery = true)
     List<Object[]> getBlacklistCountByCountry();
+
+    @Query(value = """
+            SELECT
+            b.type AS type,
+            COUNT(b.id) AS total_count
+            FROM blacklists b
+            WHERE b.is_deleted = false
+    GROUP BY b.type
+    ORDER BY total_count DESC
+    """, nativeQuery = true)
+    List<Object[]> getBlacklistCountByType();
 }
