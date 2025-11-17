@@ -1,5 +1,6 @@
 package com.aigreentick.services.shared.reports.controller;
 
+import com.aigreentick.services.shared.reports.dto.BlacklistExpiringSoonDto;
 import com.aigreentick.services.shared.reports.dto.BlacklistStatusReportDto;
 import com.aigreentick.services.shared.reports.dto.BlacklistTypeCountDto;
 import com.aigreentick.services.shared.reports.dto.CountryBlacklistCountDto;
@@ -35,4 +36,10 @@ public class BlacklistReportController {
     public ResponseEntity<List<BlacklistTypeCountDto>> getBlacklistCountByType() {
         return ResponseEntity.ok(blacklistReportService.getBlacklistCountByType());
     }
+
+    @GetMapping("/blacklist-expiring-soon")
+    public ResponseEntity<List<BlacklistExpiringSoonDto>> getExpiringSoon() {
+        return ResponseEntity.ok(blacklistReportService.getExpiringSoon());
+    }
+
 }

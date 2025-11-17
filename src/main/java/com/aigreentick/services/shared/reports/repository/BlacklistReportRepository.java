@@ -49,4 +49,23 @@ public interface BlacklistReportRepository extends JpaRepository<Blacklist, Long
     ORDER BY total_count DESC
     """, nativeQuery = true)
     List<Object[]> getBlacklistCountByType();
+
+    @Query(value = """
+    SELECT 
+        b.id,
+        b.mobile,
+        b.country_id,
+        b.type,
+        b.reason,
+        b.expires_at
+    FROM blacklists b
+    WHERE 
+        b.is_deleted = false 
+        AND b.is_blocked = true
+        AND b.expires_at IS NOT NULL
+        AND b.expires_at > NOW()
+        AND b.expires_at <= NOW() + INTERVAL '7 days'
+    ORDER BY b.expires_at ASC
+    """, nativeQuery = true)
+    List<Object[]> getExpiringSoon();
 }

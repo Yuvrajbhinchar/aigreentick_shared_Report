@@ -1,5 +1,6 @@
 package com.aigreentick.services.shared.reports.service;
 
+import com.aigreentick.services.shared.reports.dto.BlacklistExpiringSoonDto;
 import com.aigreentick.services.shared.reports.dto.BlacklistStatusReportDto;
 import com.aigreentick.services.shared.reports.dto.BlacklistTypeCountDto;
 import com.aigreentick.services.shared.reports.dto.CountryBlacklistCountDto;
@@ -42,6 +43,22 @@ public class BlacklistReportService {
                 new BlacklistTypeCountDto(
                         (String) row[0],                // type as string
                         ((Number) row[1]).longValue()   // count
+                )
+        ).collect(Collectors.toList());
+    }
+
+    public List<BlacklistExpiringSoonDto> getExpiringSoon() {
+
+        List<Object[]> rows = blacklistRepository.getExpiringSoon();
+
+        return rows.stream().map(row ->
+                new BlacklistExpiringSoonDto(
+                        ((Number) row[0]).longValue(), // id
+                        (String) row[1],               // mobile
+                        row[2] == null ? null : ((Number) row[2]).longValue(), // country_id
+                        (String) row[3],               // type
+                        (String) row[4],               // reason
+                        row[5] == null ? null : ((java.sql.Timestamp) row[5]).toLocalDateTime()
                 )
         ).collect(Collectors.toList());
     }
